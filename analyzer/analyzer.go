@@ -50,6 +50,10 @@ func run(pass *analysis.Pass) (interface{}, error) {
 						if !isAllEnglishLetters(s) {
 							pass.Reportf(call.Pos(), "log messages must be in english only")
 						}
+
+						if hasSpecialChar(s) {
+							pass.Reportf(call.Pos(), "log messages must not contain special characters or emojis")
+						}
 					}
 				}
 			}
@@ -73,4 +77,16 @@ func isAllEnglishLetters(s string) bool {
 	}
 
 	return true
+}
+
+func hasSpecialChar(s string) bool {
+	for _, r := range s {
+		if r == ' ' {
+			continue
+		}
+		if !unicode.IsLetter(r) && !unicode.IsDigit(r) {
+			return true
+		}
+	}
+	return false
 }
