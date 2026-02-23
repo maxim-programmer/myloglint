@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	log.Println("good") // want "logging found"
+	log.Println("good") // skip
 	fmt.Println("good") // skip
 }

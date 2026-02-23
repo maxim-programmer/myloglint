@@ -2,6 +2,9 @@ package analyzer
 
 import (
 	"go/ast"
+	"go/token"
+	"strings"
+	"unicode"
 
 	"golang.org/x/tools/go/analysis"
 )
@@ -36,7 +39,16 @@ func run(pass *analysis.Pass) (interface{}, error) {
 				return true
 			}
 
-			pass.Reportf(call.Pos(), "logging found")
+			if len(call.Args) > 0 {
+				if lit, ok := call.Args[0].(*ast.BasicLit); ok && lit.Kind == token.STRING {
+					s := strings.Trim(lit.Value, `"`)
+					if len(s) > 0 {
+						if unicode.IsUpper(rune(s[0])) {
+							pass.Reportf(call.Pos(), "log messages must begin with a lowercase letter")
+						}
+					}
+				}
+			}
 
 			return true
 		})

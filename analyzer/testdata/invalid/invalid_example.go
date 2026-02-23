@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	log.Println("Bad") // want "logging found"
+	log.Println("Bad") // want "log messages must begin with a lowercase letter"
 	fmt.Println("Bad") // skip
 }
