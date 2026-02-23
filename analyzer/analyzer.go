@@ -46,6 +46,10 @@ func run(pass *analysis.Pass) (interface{}, error) {
 						if unicode.IsUpper(rune(s[0])) {
 							pass.Reportf(call.Pos(), "log messages must begin with a lowercase letter")
 						}
+
+						if !isAllEnglishLetters(s) {
+							pass.Reportf(call.Pos(), "log messages must be in english only")
+						}
 					}
 				}
 			}
@@ -55,4 +59,18 @@ func run(pass *analysis.Pass) (interface{}, error) {
 	}
 
 	return nil, nil
+}
+
+func isAllEnglishLetters(s string) bool {
+	s = strings.ToLower(s)
+	for _, r := range s {
+		if !unicode.IsLetter(r) {
+			continue
+		}
+		if r < 'a' || r > 'z' {
+			return false
+		}
+	}
+
+	return true
 }
