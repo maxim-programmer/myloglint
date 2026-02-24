@@ -1,12 +1,21 @@
 package valid
 
 import (
-	"fmt"
 	"log"
 )
 
 func main() {
-	log.Println("good") // skip
-	fmt.Println("good") // skip
-	log.Println("english english") // skip
+	log.Println("starting server on port 8080")
+	log.Println("failed to connect to database")
+
+	log.Println("starting server")
+	log.Println("failed to connect to database")
+
+	log.Println("server started")
+	log.Println("connection failed")
+	log.Println("something went wrong")
+
+	log.Println("user authenticated successfully")
+	log.Println("api request completed")
+	log.Println("token validated")
 }
